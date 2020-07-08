@@ -1,9 +1,9 @@
 <template>
     <div style="height:50px;">
-    <van-tabbar >
-        <van-tabbar-item icon="wap-home" to="/home">首页</van-tabbar-item>
-        <van-tabbar-item icon="wap-nav" to="/category" >分类</van-tabbar-item>
-        <van-tabbar-item icon="cart" to="/cart" >购物车</van-tabbar-item>
+    <van-tabbar  active-color="#000" v-model='active'>
+        <van-tabbar-item icon="wap-home" replace  to="/home">首页</van-tabbar-item>
+        <van-tabbar-item icon="wap-nav"   to="/category" >分类</van-tabbar-item>
+        <van-tabbar-item icon="cart"  to="/cart" >购物车</van-tabbar-item>
         <van-tabbar-item icon="contact" to="/user/index">我的</van-tabbar-item>
     </van-tabbar>
     </div>
@@ -16,6 +16,28 @@ export default {
     components:{
         [Tabbar.name]: Tabbar,
         [TabbarItem.name]: TabbarItem,
+    },
+    data(){
+        return {
+            active:0
+        }
+    },
+    created(){
+        console.log("this",this.$route)
+    },
+    watch:{
+        "$route.name"(newV){
+            this.asyncActive();
+        }
+    },
+    methods:{
+        asyncActive(){
+          let path=['home','category','cart','user']
+           let index= path.indexOf(this.$route.name);
+           if(index>-1){
+               this.active=index;
+           }
+        }
     }
 }
 </script>
